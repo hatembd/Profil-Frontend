@@ -1,0 +1,57 @@
+<style>
+  .jumbotron {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+  }
+</style>
+<body>
+<div class="jumbotron text-center">
+  <h1>Profils des employés</h1>
+  <p>**************************************************************************</p>
+</div>
+</body>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Liste des profiles</div>
+    <div class="panel-body">
+      <button class="btn btn-primary" (click)="onGetProfiles()">Profiles</button>
+    </div>
+    <div class="panel-body">
+      <form #f="ngForm" (ngSubmit)="onChercher(f.value)">
+        <div class="form-group">
+          <label>Mot clé :</label>
+          <input type="text" name="keyword" ngModel>
+          <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span>
+            Chercher
+          </button>
+        </div>
+
+      </form>
+      <table *ngIf="profils" class="table table-responsive">
+        <thead>
+        <tr>
+          <th>Id</th><th>Nom</th><th>Titre</th><th>Experiences(Ans)</th><th>Competences</th><th>Email</th>
+        </tr>
+        <tr *ngFor="let p of profils._embedded.profils">
+
+          <td>{{p.idProfil}}</td>
+          <td>{{p.nom}}</td>
+          <td>{{p.titre}}</td>
+          <td>{{p.nbrAExp}}</td>
+          <td>{{p.competence}}</td>
+          <td>{{p.email}}</td>
+          <td><a class="btn btn-danger" (click)="onDeleteProfils(p)">Delete</a></td>
+        </tr>
+        </thead>
+      </table>
+      <ul *ngIf="pages" class="nav nav-pills">
+        <li class="clickable" [ngClass]="i==currentPage?'active':''" *ngFor="let p of pages; let i=index" >
+          <a (click)="onPageProfiles(i)">{{i}}</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
